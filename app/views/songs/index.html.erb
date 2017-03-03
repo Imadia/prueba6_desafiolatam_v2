@@ -1,0 +1,36 @@
+<h1>Songs</h1>
+ <%= form_tag songs_path, :method => 'get' do %> 
+  <%= text_field_tag "search", nil, placeholder: "Filtrar Genero" %>
+  <%= submit_tag "search"%>
+  <button><%= link_to "Quitar Filtro", root_path %></button>
+<% end -%>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Name <%= link_to "ordenar", songs_path(sort: "name")%></th>
+      <th>Duration</th>
+      <th>Genre</th>
+      <th>Song</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @songs.each do |song| %>
+      <tr>
+        <td><%= song.name %></td>
+        <td><%= song.duration %></td>
+        <td><%= song.genre.name %></td>
+        <td><%= link_to 'Add to my list', add_song_song_path(song), method: :post %></td>
+        <td><%= link_to 'Show', song %></td>
+        <td><%= link_to 'Edit', edit_song_path(song) %></td>
+        <td><%= link_to 'Destroy', song, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Song', new_song_path %>
